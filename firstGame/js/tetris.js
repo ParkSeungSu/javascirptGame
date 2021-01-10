@@ -4,14 +4,11 @@ class Tetris {
         this.stageHeight = 20;
         this.stageCanvas = document.getElementById("stage");
         this.nextCanvas = document.getElementById("next");
-
         let cellWidth = this.stageCanvas.width / this.stageWidth;
         let cellHeight = this.stageCanvas.height / this.stageHeight;
-
         this.cellSize = cellWidth < cellHeight ? cellWidth : cellHeight;
         this.stageLeftPadding = (this.stageCanvas.width - this.cellSize * this.stageWidth) / 2;
         this.stageTopPadding = (this.stageCanvas.height - this.cellSize * this.stageHeight) / 2;
-
         this.blocks = this.createBlocks();
         this.deletedLines = 0;
 
@@ -39,7 +36,6 @@ class Tetris {
         document.getElementById("tetris-fall-button").onmousedown = (e) => {
             this.fall();
         }
-
     }
 
     createBlocks() {
@@ -49,9 +45,9 @@ class Tetris {
                 [[0, -1], [0, 0], [0, 1], [0, 2]],
                 [[-1, 0], [0, 0], [1, 0], [2, 0]],
                 [[0, -1], [0, 0], [0, 1], [0, 2]]],
-                color: "rgb(0,255,255",
-                highlight: "rgb(255,255,255)",
-                shadow: "rgb(0,128,128)"
+                color: "rgb(0, 255, 255)",
+                highlight: "rgb(255, 255, 255)",
+                shadow: "rgb(0, 128, 128)"
             },
             {
                 shape: [[[0, 0], [1, 0], [0, 1], [1, 1]],
@@ -109,8 +105,8 @@ class Tetris {
             }
         ];
         return blocks;
-
     }
+
     drawBlock(x, y, type, angle, canvas) {
         let context = canvas.getContext("2d");
         let block = this.blocks[type];
@@ -124,11 +120,10 @@ class Tetris {
     }
 
     drawCell(context, cellX, cellY, cellSize, type) {
-        let block = this.block[type];
+        let block = this.blocks[type];
         let adjustedX = cellX + 0.5;
         let adjustedY = cellY + 0.5;
         let adjustedSize = cellSize - 1;
-
         context.fillStyle = block.color;
         context.fillRect(adjustedX, adjustedY, adjustedSize, adjustedSize);
         context.strokeStyle = block.highlight;
@@ -149,13 +144,13 @@ class Tetris {
         let virtualStage = new Array(this.stageWidth);
         for (let i = 0; i < this.stageWidth; i++) {
             virtualStage[i] = new Array(this.stageHeight).fill(null);
-
         }
         this.virtualStage = virtualStage;
-        this.currentBlpck = null;
+        this.currentBlock = null;
         this.nextBlock = this.getRandomBlock();
         this.mainLoop();
     }
+
     mainLoop() {
         if (this.currentBlock == null) {
             if (!this.createNewBlock()) {
@@ -257,6 +252,7 @@ class Tetris {
             }
         }
     }
+
     drawStage() {
         this.clear(this.stageCanvas);
 
@@ -321,5 +317,4 @@ class Tetris {
         context.fillStyle = "rgb(0, 0, 0)";
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
-
 }
